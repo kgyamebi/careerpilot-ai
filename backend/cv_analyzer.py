@@ -93,6 +93,40 @@ def extract_education(text):
     return education
 
 
+def extract_experience(text):
+    """
+    Extract experience-related information.
+    """
+
+    experience_keywords = [
+        "Assistant",
+        "Coordinator",
+        "Manager",
+        "Facilitator",
+        "Representative",
+        "Mentor",
+        "President",
+        "Vice-President",
+        "Intern"
+    ]
+
+    experience = []
+
+    lines = text.split("\n")
+
+    for line in lines:
+
+        for keyword in experience_keywords:
+
+            if keyword.lower() in line.lower():
+
+                experience.append(line.strip())
+
+                break
+
+    return experience
+
+
 if __name__ == "__main__":
 
     cv_path = "uploads/SampleCV2.pdf"
@@ -123,4 +157,14 @@ if __name__ == "__main__":
     print("=" * 50)
 
     for item in education:
+        print(item)
+
+    # Extract experience
+    experience = extract_experience(cv_text)
+
+    print("\n" + "=" * 50)
+    print("EXPERIENCE")
+    print("=" * 50)
+
+    for item in experience:
         print(item)
