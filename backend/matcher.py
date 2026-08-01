@@ -1,3 +1,5 @@
+import pandas as pd
+
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
@@ -5,9 +7,6 @@ from backend.cv_analyzer import extract_text
 
 
 def calculate_match_score(cv_text, job_text):
-    """
-    Calculate similarity between a CV and a job description.
-    """
 
     vectorizer = TfidfVectorizer()
 
@@ -20,37 +19,61 @@ def calculate_match_score(cv_text, job_text):
         vectors[1]
     )
 
-    return round(similarity[0][0] * 100, 2)
+    return round(
+        similarity[0][0] * 100,
+        2
+    )
+
+
+def recommend_jobs(cv_text, jobs_df):
+
+    recommendations = []
+
+    for _, row in jobs_df.iterrows():
+
+        score = calculate_match_score(
+            cv_text,
+            row["description"]
+        )
+
+        recommendations.append(
+            {
+                "job_title": row["job_title"],
+                "company": row["company"],
+                "score": score
+            }
+        )
+
+    recommendations.sort(
+        key=lambda x: x["score"],
+        reverse=True
+    )
+
+    return recommendations
 
 
 if __name__ == "__main__":
 
-    # Extract text from CV
     cv_text = extract_text(
         "uploads/SampleCV2.pdf"
     )
 
-    # Sample psychology-related job description
-    job_description = """
-    We are seeking a Research Assistant with experience in
-    psychology, counselling, statistics, SPSS, data collection,
-    academic research, and working with research participants.
-
-    Responsibilities include:
-    - Conducting interviews
-    - Collecting and analyzing data
-    - Performing statistical analysis using SPSS
-    - Supporting psychology research projects
-    - Preparing research reports
-    """
-
-    score = calculate_match_score(
-        cv_text,
-        job_description
+    jobs_df = pd.read_csv(
+        "data/jobs.csv"
     )
 
-    print("\n" + "=" * 50)
-    print("JOB MATCH SCORE")
+    matches = recommend_jobs(
+        cv_text,
+        jobs_df
+    )
+
+    print("\nTOP JOB MATCHES")
     print("=" * 50)
 
-    print(f"Match Score: {score}%")
+    for match in matches:
+
+        print(
+            f"{match['job_title']} "
+            f"({match['company']}) "
+            f"- {match['score']}%"
+        )

@@ -32,7 +32,7 @@ if __name__ == "__main__":
         "SQL"
     ]
 
-    missing = find_skill_gaps(
+    missing_skills = find_skill_gaps(
         cv_skills,
         required_skills
     )
@@ -44,4 +44,4 @@ if __name__ == "__main__":
     print(required_skills)
 
     print("\nMissing Skills:")
-    print(missing)
+    print(missing_skills)
