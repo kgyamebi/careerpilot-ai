@@ -6,7 +6,7 @@ from backend.cv_analyzer import extract_text
 
 def calculate_match_score(cv_text, job_text):
     """
-    Calculate similarity between a CV and job description.
+    Calculate similarity between a CV and a job description.
     """
 
     vectorizer = TfidfVectorizer()
@@ -25,19 +25,23 @@ def calculate_match_score(cv_text, job_text):
 
 if __name__ == "__main__":
 
-    # Read CV directly from PDF
+    # Extract text from CV
     cv_text = extract_text(
         "uploads/SampleCV2.pdf"
     )
 
-    # Example psychology-related job
+    # Sample psychology-related job description
     job_description = """
     We are seeking a Research Assistant with experience in
     psychology, counselling, statistics, SPSS, data collection,
     academic research, and working with research participants.
 
-    Responsibilities include conducting interviews, collecting data,
-    performing statistical analysis, and contributing to research studies.
+    Responsibilities include:
+    - Conducting interviews
+    - Collecting and analyzing data
+    - Performing statistical analysis using SPSS
+    - Supporting psychology research projects
+    - Preparing research reports
     """
 
     score = calculate_match_score(
