@@ -1,71 +1,68 @@
-SCAM_INDICATORS = [
-    "application fee",
-    "registration fee",
-    "pay before interview",
-    "send money",
-    "wire transfer",
-    "guaranteed job",
-    "work from home and earn",
-    "no experience needed",
-    "urgent hiring",
-    "immediate start",
-    "contact via whatsapp only"
-]
+import joblib
+
+# Load trained model
+model = joblib.load(
+    "models/scam_detector_model.pkl"
+)
+
+# Load TF-IDF vectorizer
+vectorizer = joblib.load(
+    "models/tfidf_vectorizer.pkl"
+)
 
 
-def detect_scam(job_text):
-    """
-    Detect potential scam indicators in a job posting.
-    """
+def predict_job(job_text):
 
-    detected_flags = []
+    vector = vectorizer.transform(
+        [job_text]
+    )
 
-    job_text = job_text.lower()
+    prediction = model.predict(vector)[0]
 
-    for phrase in SCAM_INDICATORS:
+    probabilities = model.predict_proba(vector)[0]
 
-        if phrase.lower() in job_text:
-            detected_flags.append(phrase)
-
-    return detected_flags
-
-
-def calculate_risk_score(detected_flags):
-
-    max_flags = len(SCAM_INDICATORS)
-
-    risk_score = (
-        len(detected_flags) / max_flags
-    ) * 100
-
-    return round(risk_score, 2)
+    return prediction, probabilities
 
 
 if __name__ == "__main__":
 
     sample_job = """
-    URGENT HIRING!
+    Work from home and earn $5000 per week.
 
-    Work from home and earn $5000 weekly.
+    No experience required.
 
-    No experience needed.
+    Immediate start.
 
-    Pay a registration fee before interview.
+    Send money before interview.
 
     Contact via WhatsApp only.
     """
 
-    flags = detect_scam(sample_job)
+    prediction, probabilities = predict_job(
+        sample_job
+    )
 
-    risk_score = calculate_risk_score(flags)
+    legitimate_probability = probabilities[0] * 100
+    fraudulent_probability = probabilities[1] * 100
 
     print("\n" + "=" * 50)
     print("SCAM DETECTOR")
     print("=" * 50)
 
-    print(f"\nScam Risk Score: {risk_score}%")
+    if prediction == 1:
 
-    print("\nDetected Red Flags:")
+        print("\n⚠ Likely Scam Job")
 
-    for flag in flags:
-        print(f"⚠ {flag}")
+    else:
+
+        print("\n✅ Likely Legitimate Job")
+
+    print(
+        f"\nLegitimate Probability: "
+        f"{legitimate_probability:.2f}%"
+    )
+
+    print(
+        f"Fraudulent Probability: "
+        f"{fraudulent_probability:.2f}%"
+    )
