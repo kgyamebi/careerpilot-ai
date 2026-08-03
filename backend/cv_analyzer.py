@@ -1,34 +1,29 @@
 import pdfplumber
+import re
 
-# Skills database
-SKILLS = [
-    "Python",
-    "Java",
-    "SQL",
-    "Git",
-    "GitHub",
-    "Docker",
-    "AWS",
-    "Machine Learning",
-    "HTML",
-    "CSS",
-    "JavaScript",
-    "React",
-    "Flask",
-    "Streamlit",
-    "Statistics",
-    "Research Methods",
-    "Counselling",
-    "Research",
-    "Excel",
-    "SPSS"
-]
 
+# ============================
+# LOAD MASTER SKILLS DATABASE
+# ============================
+
+with open(
+    "data/master_skills.txt",
+    "r",
+    encoding="utf-8"
+) as file:
+
+    SKILLS = [
+        skill.strip()
+        for skill in file.readlines()
+        if skill.strip()
+    ]
+
+
+# ============================
+# PDF TEXT EXTRACTION
+# ============================
 
 def extract_text(pdf_path):
-    """
-    Extract text from a PDF CV.
-    """
 
     text = ""
 
@@ -39,132 +34,346 @@ def extract_text(pdf_path):
             page_text = page.extract_text()
 
             if page_text:
+
                 text += page_text + "\n"
 
     return text
 
 
+# ============================
+# SKILLS EXTRACTION
+# ============================
+
 def extract_skills(text):
-    """
-    Extract skills from CV text.
-    """
+
+    text = text.lower()
 
     found_skills = []
 
-    text = text.lower().replace("\n", " ")
-
     for skill in SKILLS:
 
-        if skill.lower() in text:
+        if len(skill) < 3:
+            continue
+
+        pattern = (
+            r"(?<!\w)"
+            + re.escape(skill.lower())
+            + r"(?!\w)"
+        )
+
+        if re.search(pattern, text):
+
             found_skills.append(skill)
 
-    return found_skills
+    return sorted(
+        list(set(found_skills))
+    )
 
+
+# ============================
+# EDUCATION EXTRACTION
+# ============================
 
 def extract_education(text):
-    """
-    Extract education-related information.
-    """
 
-    education_keywords = [
-        "University",
-        "College",
-        "Institute",
-        "Bachelor",
-        "Master",
-        "Diploma",
-        "Degree"
+    institutions = set()
+
+    qualification_patterns = [
+
+        r"\bPhD\s+[A-Za-z ]+",
+        r"\bMPhil\s+[A-Za-z ]+",
+        r"\bMSc\s+[A-Za-z ]+",
+        r"\bMBA\s+[A-Za-z ]+",
+
+        r"\bBSc\s+[A-Za-z ]+",
+        r"\bB\.Sc\.?\s+[A-Za-z ]+",
+
+        r"\bBEd\s+[A-Za-z ]+",
+        r"\bB\.Ed\.?\s+[A-Za-z ]+",
+
+        r"\bBA\s+[A-Za-z ]+",
+        r"\bB\.A\.?\s+[A-Za-z ]+"
     ]
 
-    education = []
+    qualifications = set()
 
     lines = text.split("\n")
 
+    university_pattern = (
+        r"(University of [A-Za-z ]+)"
+    )
+
     for line in lines:
 
-        for keyword in education_keywords:
+        line = line.strip()
 
-            if keyword.lower() in line.lower():
+        if not line:
+            continue
 
-                education.append(line.strip())
+        # -----------------
+        # Institutions
+        # -----------------
 
-                break
+        institutions_found = re.findall(
+            university_pattern,
+            line,
+            flags=re.IGNORECASE
+        )
 
-    return education
+        for institution in institutions_found:
 
+            institutions.add(
+                institution.strip()
+            )
+
+        # -----------------
+        # Qualifications
+        # -----------------
+
+        for pattern in qualification_patterns:
+
+            matches = re.findall(
+                pattern,
+                line,
+                flags=re.IGNORECASE
+            )
+
+            for match in matches:
+
+                qualifications.add(
+                    match.strip()
+                )
+
+    return {
+
+        "institutions":
+            sorted(list(institutions)),
+
+        "qualifications":
+            sorted(list(qualifications))
+    }
+
+
+# ============================
+# EXPERIENCE EXTRACTION
+# ============================
 
 def extract_experience(text):
-    """
-    Extract experience-related information.
-    """
 
-    experience_keywords = [
-        "Assistant",
+    roles = [
+
+        "Assistant Lecturer",
+        "Lecturer",
+        "Professor",
+
+        "Research Officer",
+        "Research Assistant",
+
+        "Teacher",
+        "Science Teacher",
+
+        "Tutor",
+        "Instructor",
+
         "Coordinator",
         "Manager",
+
+        "Administrator",
+        "Trainer",
         "Facilitator",
-        "Representative",
-        "Mentor",
-        "President",
-        "Vice-President",
-        "Intern"
+
+        "Consultant",
+        "Engineer",
+
+        "Analyst",
+        "Technician",
+
+        "Developer",
+        "Supervisor"
     ]
 
-    experience = []
+    experience = set()
 
     lines = text.split("\n")
 
     for line in lines:
 
-        for keyword in experience_keywords:
+        line = line.strip()
 
-            if keyword.lower() in line.lower():
+        if not line:
+            continue
 
-                experience.append(line.strip())
+        if len(line) > 120:
+            continue
+
+        if (
+            "award" in line.lower()
+            or "scholarship" in line.lower()
+            or "publication" in line.lower()
+        ):
+            continue
+
+        for role in roles:
+
+            pattern = (
+                r"\b"
+                + re.escape(role.lower())
+                + r"\b"
+            )
+
+            if re.search(
+                pattern,
+                line.lower()
+            ):
+
+                experience.add(line)
 
                 break
 
-    return experience
+    return sorted(
+        list(experience)
+    )
 
+
+# ============================
+# HIGHEST QUALIFICATION
+# ============================
+
+def get_top_qualification(
+    qualifications
+):
+
+    priority = [
+
+        "phd",
+        "mphil",
+        "msc",
+        "mba",
+        "bsc",
+        "b.ed",
+        "ba"
+    ]
+
+    for level in priority:
+
+        for qualification in qualifications:
+
+            if level in qualification.lower():
+
+                return qualification
+
+    return "Unknown"
+
+
+# ============================
+# SUMMARY
+# ============================
+
+def generate_cv_summary(
+    cv_data
+):
+
+    qualifications = cv_data[
+        "education"
+    ]["qualifications"]
+
+    return {
+
+        "top_qualification":
+            get_top_qualification(
+                qualifications
+            ),
+
+        "skills_count":
+            len(
+                cv_data["skills"]
+            ),
+
+        "experience_count":
+            len(
+                cv_data["experience"]
+            )
+    }
+
+
+# ============================
+# FULL ANALYSIS
+# ============================
+
+def analyze_cv(pdf_path):
+
+    text = extract_text(
+        pdf_path
+    )
+
+    cv_data = {
+
+        "text": text,
+
+        "skills":
+            extract_skills(text),
+
+        "education":
+            extract_education(text),
+
+        "experience":
+            extract_experience(text)
+    }
+
+    cv_data["summary"] = (
+        generate_cv_summary(
+            cv_data
+        )
+    )
+
+    return cv_data
+
+
+# ============================
+# TEST RUN
+# ============================
 
 if __name__ == "__main__":
 
     cv_path = "uploads/SampleCV2.pdf"
 
-    # Extract CV text
-    cv_text = extract_text(cv_path)
+    cv_data = analyze_cv(
+        cv_path
+    )
 
     print("\n" + "=" * 50)
-    print("CV TEXT")
+    print("SKILLS")
     print("=" * 50)
-
-    print(cv_text)
-
-    # Extract skills
-    skills = extract_skills(cv_text)
+    print(cv_data["skills"])
 
     print("\n" + "=" * 50)
-    print("DETECTED SKILLS")
+    print("INSTITUTIONS")
     print("=" * 50)
-
-    print(skills)
-
-    # Extract education
-    education = extract_education(cv_text)
+    print(
+        cv_data["education"][
+            "institutions"
+        ]
+    )
 
     print("\n" + "=" * 50)
-    print("EDUCATION")
+    print("QUALIFICATIONS")
     print("=" * 50)
-
-    for item in education:
-        print(item)
-
-    # Extract experience
-    experience = extract_experience(cv_text)
+    print(
+        cv_data["education"][
+            "qualifications"
+        ]
+    )
 
     print("\n" + "=" * 50)
     print("EXPERIENCE")
     print("=" * 50)
+    print(
+        cv_data["experience"]
+    )
 
-    for item in experience:
-        print(item)
+    print("\n" + "=" * 50)
+    print("SUMMARY")
+    print("=" * 50)
+    print(
+        cv_data["summary"]
+    )

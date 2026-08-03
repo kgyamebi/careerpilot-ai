@@ -1,0 +1,581 @@
+Python
+Java
+JavaScript
+TypeScript
+C Programming
+C++
+C#
+PHP
+Ruby
+Go Programming
+Kotlin
+Swift
+Rust
+Scala
+SQL
+MySQL
+PostgreSQL
+MongoDB
+Oracle Database
+Database Design
+Database Administration
+
+HTML
+CSS
+SASS
+Bootstrap
+Tailwind CSS
+React
+React Native
+Angular
+Vue.js
+Next.js
+Node.js
+Express.js
+Flask
+Django
+FastAPI
+Laravel
+Drupal
+WordPress
+Web Development
+Frontend Development
+Backend Development
+Full Stack Development
+
+Git
+GitHub
+GitLab
+Bitbucket
+Docker
+Kubernetes
+CI/CD
+Jenkins
+DevOps
+Linux
+Unix
+Windows Server
+Bash Scripting
+Shell Scripting
+
+AWS
+Azure
+Google Cloud Platform
+Cloud Computing
+Cloud Security
+Cloud Architecture
+Cloud Migration
+Cloud Infrastructure
+Virtualization
+VMware
+Hyper-V
+
+Machine Learning
+Deep Learning
+Artificial Intelligence
+Generative AI
+Prompt Engineering
+Natural Language Processing
+Computer Vision
+Large Language Models
+ChatGPT
+Copilot
+TensorFlow
+PyTorch
+Keras
+Scikit-learn
+OpenCV
+Hugging Face
+
+Data Science
+Data Analysis
+Predictive Analytics
+Data Mining
+Big Data
+Business Intelligence
+Data Visualization
+Power BI
+Tableau
+Data Cleaning
+Data Warehousing
+Data Governance
+Dashboard Development
+Data Engineering
+Data Modeling
+Data Quality Management
+Data Pipelines
+Forecasting
+Feature Engineering
+Business Analytics
+ETL
+Apache Spark
+Hadoop
+Apache Kafka
+Snowflake
+Databricks
+A/B Testing
+
+Excel
+Microsoft Excel
+Microsoft Word
+PowerPoint
+Microsoft Office
+Outlook
+Access
+Microsoft Teams
+Microsoft Teams Administration
+SharePoint
+SharePoint Administration
+OneDrive
+Exchange Online
+Microsoft 365
+Office 365
+
+Google Workspace
+Google Docs
+Google Sheets
+Google Slides
+Google Analytics
+
+Statistics
+Statistical Analysis
+SPSS
+Jamovi
+R Programming
+Stata
+MATLAB
+Biostatistics
+
+Research
+Research Methods
+Research Design
+Quantitative Research
+Qualitative Research
+Mixed Methods Research
+Research Writing
+Academic Writing
+Scientific Writing
+Publication
+Publication Writing
+Literature Review
+Survey Design
+Questionnaire Design
+Data Collection
+Data Interpretation
+Report Writing
+Proposal Writing
+Grant Writing
+Research Ethics
+Research Supervision
+Scientific Method
+Experimental Research
+Laboratory Research
+Academic Research
+Educational Research
+Action Research
+Classroom Research
+Development Research
+Policy Research
+
+Teaching
+Teaching Assistant
+Teaching Mathematics
+Teaching Chemistry
+Teaching Physics
+Teaching Biology
+Science Teaching
+Integrated Science Teaching
+Training
+Training Delivery
+Teacher Training
+Teacher Education
+Teacher Mentorship
+Teacher Professional Development
+Education
+Science Education
+STEM Education
+STEM Curriculum Development
+Higher Education
+Early Childhood Education
+Curriculum Development
+Curriculum Design
+Curriculum Writing
+Curriculum Studies
+Curriculum Assessment
+Lesson Planning
+Educational Assessment
+Educational Leadership
+Educational Management
+Educational Policy
+Educational Measurement
+Educational Technology
+Instructional Design
+Instructional Technology
+Instructional Leadership
+Learning Assessment
+Learning Analytics
+Facilitation
+Workshop Facilitation
+Conference Presentation
+Seminar Presentation
+Mentoring
+Coaching
+Academic Advising
+Academic Leadership
+Student Supervision
+Student Engagement
+Learning Management Systems
+LMS
+Moodle
+Blackboard
+Canvas
+Virtual Learning
+Online Learning
+Distance Learning
+E-Learning
+Blended Learning
+
+Psychology
+Counselling
+Mental Health
+Clinical Psychology
+Educational Psychology
+Behavioral Science
+Neuroscience
+Psychotherapy
+Psychological Assessment
+Abnormal Psychology
+Social Psychology
+Developmental Psychology
+Personality Psychology
+Cognitive Psychology
+
+Project Management
+Program Management
+Agile
+Scrum
+Kanban
+PMP
+PRINCE2
+Sprint Planning
+Product Management
+Product Ownership
+Business Analysis
+Business Development
+Business Strategy
+Strategic Planning
+Business Process Improvement
+Business Process Management
+Consulting
+Management
+Operations Management
+Procurement
+Procurement Management
+Supply Chain Management
+Inventory Management
+Logistics Management
+Warehousing
+Risk Management
+Risk Analysis
+Change Management
+Performance Management
+Quality Assurance
+Quality Control
+Stakeholder Management
+Stakeholder Communication
+Stakeholder Engagement
+
+Finance
+Accounting
+Auditing
+Budgeting
+Bookkeeping
+Financial Management
+Financial Analysis
+Financial Reporting
+Financial Planning
+Financial Forecasting
+Taxation
+Investment Analysis
+Treasury Management
+Corporate Finance
+Asset Management
+Portfolio Management
+Credit Analysis
+Economics
+Banking
+Insurance
+Relationship Banking
+
+Marketing
+Digital Marketing
+Content Marketing
+Content Creation
+Social Media Marketing
+SEO
+Search Engine Optimization
+Search Engine Marketing
+Brand Management
+Advertising
+Sales
+Market Research
+Product Marketing
+Customer Service
+Customer Support
+Customer Success
+Customer Retention
+Customer Relationship Management
+Customer Onboarding
+E-commerce
+Retail Management
+Merchandising
+
+Computer Networking
+Networking
+Network Administration
+Network Security
+Network Engineering
+Network Monitoring
+Wireless Networking
+Mobile Networking
+CCNA
+CCNP
+Cisco
+Mikrotik
+Routing
+Switching
+Local Area Network
+Wide Area Network
+TCP/IP
+Virtual Private Network
+Domain Name System
+Dynamic Host Configuration Protocol
+Information and Communication Technology
+Information Technology
+IT Support
+Technical Support
+Systems Administration
+System Administration
+Infrastructure Support
+Infrastructure Management
+Storage Management
+Disaster Recovery
+Backup Management
+Help Desk Support
+Server Management
+Active Directory
+
+Cybersecurity
+Information Security
+Ethical Hacking
+Penetration Testing
+Incident Response
+Threat Analysis
+Threat Hunting
+Security Auditing
+Security Operations
+Security Operations Center
+SIEM
+Identity Management
+Identity Access Management
+Identity and Access Management
+Endpoint Security
+Firewall Management
+Firewall Configuration
+Vulnerability Management
+Cyber Risk Management
+Digital Forensics
+Compliance Management
+Regulatory Compliance
+Governance Risk and Compliance
+GRC
+Zero Trust
+
+Healthcare
+Health Care Provider
+Health Administration
+Healthcare Management
+Healthcare Analytics
+Healthcare Research
+Health Informatics
+Health Promotion
+Health Education
+Public Health
+Community Health Education
+Patient Care
+Patient Education
+Clinical Practice
+Clinical Data Management
+Clinical Research
+Medical Research
+Medical Administration
+Medical Laboratory
+Electronic Health Records
+Nursing
+Occupational Health
+
+Engineering
+Software Engineering
+Systems Engineering
+Mechanical Engineering
+Electrical Engineering
+Civil Engineering
+Environmental Engineering
+Industrial Engineering
+Construction Management
+Structural Engineering
+AutoCAD
+CAD Design
+SolidWorks
+GIS
+Geographic Information Systems
+Surveying
+
+Science
+Biology
+Chemistry
+Physics
+Integrated Science
+Environmental Science
+Environmental Research
+Scientific Research
+Science Communication
+Scientific Communication
+Laboratory Skills
+Laboratory Management
+
+Biotechnology
+Microbiology
+Genetics
+Biochemistry
+Food Science
+Agricultural Science
+Agribusiness
+
+Human Resources
+Human Resource Management
+Recruitment
+Recruitment Management
+Talent Acquisition
+Talent Management
+Talent Development
+Employee Relations
+Employee Training
+Employee Engagement
+Staff Development
+Workforce Planning
+Learning and Development
+Succession Planning
+People Management
+
+Public Administration
+Public Policy
+Policy Analysis
+Governance
+Development Planning
+International Development
+Government Relations
+Diplomacy
+
+Communication
+Business Communication
+Professional Communication
+Written Communication
+Written Reports
+Verbal Communication
+Interpersonal Skills
+Public Speaking
+Presentation Skills
+Presentation Development
+Negotiation
+Conflict Resolution
+Relationship Management
+Active Listening
+Technical Writing
+Copywriting
+Editing
+Proofreading
+Journalism
+Public Relations
+Media Relations
+
+Leadership
+Executive Leadership
+Leadership Development
+Leadership Training
+Team Leadership
+Teamwork
+Collaboration
+Cross Functional Collaboration
+Decision Making
+Decision Analysis
+Problem Solving
+Critical Thinking
+Analytical Thinking
+Strategic Thinking
+Creativity
+Innovation
+Adaptability
+Resilience
+Initiative
+Time Management
+Organization
+Organizational Skills
+Professional Development
+Attention to Detail
+Emotional Intelligence
+Self Management
+
+Office Administration
+Administrative Support
+Clerical Support
+Records Management
+Records Administration
+Document Management
+Information Management
+Knowledge Management
+Library Management
+
+Event Planning
+Event Management
+Fundraising
+Volunteer Management
+Community Engagement
+Community Service
+Community Development
+
+Law
+Legal Research
+Legal Writing
+
+Mobile Development
+Android Development
+iOS Development
+Flutter
+Xamarin
+React Native Development
+
+REST API
+GraphQL
+API Development
+API Integration
+Microservices
+Software Architecture
+Design Patterns
+Object-Oriented Programming
+Unit Testing
+Integration Testing
+
+SAP
+Enterprise Resource Planning
+Oracle ERP
+Microsoft Dynamics
+Enterprise Systems
+
+Telecommunications
+Fiber Optics
+VoIP
+
+Monitoring and Evaluation
+Monitoring Evaluation and Learning
+Impact Assessment
