@@ -41,6 +41,69 @@ def extract_text(pdf_path):
 
 
 # ============================
+# NAME EXTRACTION
+# ============================
+
+def extract_name(text):
+    """
+    Extract candidate name from
+    the first few lines of CV.
+    """
+
+    lines = text.split("\n")
+
+    for line in lines[:20]:
+
+        line = line.strip()
+
+        if not line:
+            continue
+
+        line_lower = line.lower()
+
+        # Skip common headings
+        if any(
+            phrase in line_lower
+            for phrase in [
+                "curriculum vitae",
+                "resume",
+                "department",
+                "university",
+                "college",
+                "email",
+                "mobile",
+                "phone",
+                "address"
+            ]
+        ):
+            continue
+
+        words = line.split()
+
+        if 2 <= len(words) <= 5:
+
+            alphabetic_words = [
+
+                word
+
+                for word in words
+
+                if word.replace(
+                    ".",
+                    ""
+                ).isalpha()
+            ]
+
+            if len(
+                alphabetic_words
+            ) >= 2:
+
+                return line.title()
+
+    return "CareerPilot Candidate"
+
+
+# ============================
 # SKILLS EXTRACTION
 # ============================
 
@@ -57,16 +120,27 @@ def extract_skills(text):
 
         pattern = (
             r"(?<!\w)"
-            + re.escape(skill.lower())
+            + re.escape(
+                skill.lower()
+            )
             + r"(?!\w)"
         )
 
-        if re.search(pattern, text):
+        if re.search(
+            pattern,
+            text
+        ):
 
-            found_skills.append(skill)
+            found_skills.append(
+                skill
+            )
 
     return sorted(
-        list(set(found_skills))
+        list(
+            set(
+                found_skills
+            )
+        )
     )
 
 
@@ -100,7 +174,7 @@ def extract_education(text):
     lines = text.split("\n")
 
     university_pattern = (
-        r"(University of [A-Za-z ]+)"
+        r"University of [A-Za-z ]+"
     )
 
     for line in lines:
@@ -110,10 +184,6 @@ def extract_education(text):
         if not line:
             continue
 
-        # -----------------
-        # Institutions
-        # -----------------
-
         institutions_found = re.findall(
             university_pattern,
             line,
@@ -122,13 +192,31 @@ def extract_education(text):
 
         for institution in institutions_found:
 
-            institutions.add(
+            institution = (
                 institution.strip()
             )
 
-        # -----------------
-        # Qualifications
-        # -----------------
+            institution = re.sub(
+                r"\s+PhD.*",
+                "",
+                institution
+            )
+
+            institution = re.sub(
+                r"\s+MPhil.*",
+                "",
+                institution
+            )
+
+            institution = re.sub(
+                r"\s+B\.Ed.*",
+                "",
+                institution
+            )
+
+            institutions.add(
+                institution.strip()
+            )
 
         for pattern in qualification_patterns:
 
@@ -147,10 +235,18 @@ def extract_education(text):
     return {
 
         "institutions":
-            sorted(list(institutions)),
+            sorted(
+                list(
+                    institutions
+                )
+            ),
 
         "qualifications":
-            sorted(list(qualifications))
+            sorted(
+                list(
+                    qualifications
+                )
+            )
     }
 
 
@@ -206,10 +302,16 @@ def extract_experience(text):
         if len(line) > 120:
             continue
 
-        if (
-            "award" in line.lower()
-            or "scholarship" in line.lower()
-            or "publication" in line.lower()
+        if any(
+            word in line.lower()
+            for word in [
+
+                "award",
+                "scholarship",
+                "publication",
+                "journal",
+                "book"
+            ]
         ):
             continue
 
@@ -217,7 +319,9 @@ def extract_experience(text):
 
             pattern = (
                 r"\b"
-                + re.escape(role.lower())
+                + re.escape(
+                    role.lower()
+                )
                 + r"\b"
             )
 
@@ -226,12 +330,16 @@ def extract_experience(text):
                 line.lower()
             ):
 
-                experience.add(line)
+                experience.add(
+                    line
+                )
 
                 break
 
     return sorted(
-        list(experience)
+        list(
+            experience
+        )
     )
 
 
@@ -258,7 +366,9 @@ def get_top_qualification(
 
         for qualification in qualifications:
 
-            if level in qualification.lower():
+            if level in (
+                qualification.lower()
+            ):
 
                 return qualification
 
@@ -266,16 +376,17 @@ def get_top_qualification(
 
 
 # ============================
-# SUMMARY
+# SUMMARY GENERATION
 # ============================
 
 def generate_cv_summary(
     cv_data
 ):
 
-    qualifications = cv_data[
-        "education"
-    ]["qualifications"]
+    qualifications = (
+        cv_data["education"]
+        ["qualifications"]
+    )
 
     return {
 
@@ -291,13 +402,15 @@ def generate_cv_summary(
 
         "experience_count":
             len(
-                cv_data["experience"]
+                cv_data[
+                    "experience"
+                ]
             )
     }
 
 
 # ============================
-# FULL ANALYSIS
+# FULL CV ANALYSIS
 # ============================
 
 def analyze_cv(pdf_path):
@@ -308,16 +421,28 @@ def analyze_cv(pdf_path):
 
     cv_data = {
 
-        "text": text,
+        "text":
+            text,
+
+        "name":
+            extract_name(
+                text
+            ),
 
         "skills":
-            extract_skills(text),
+            extract_skills(
+                text
+            ),
 
         "education":
-            extract_education(text),
+            extract_education(
+                text
+            ),
 
         "experience":
-            extract_experience(text)
+            extract_experience(
+                text
+            )
     }
 
     cv_data["summary"] = (
@@ -335,33 +460,38 @@ def analyze_cv(pdf_path):
 
 if __name__ == "__main__":
 
-    cv_path = "uploads/SampleCV2.pdf"
-
     cv_data = analyze_cv(
-        cv_path
+        "uploads/SampleCV2.pdf"
+    )
+
+    print("\n" + "=" * 50)
+    print("NAME")
+    print("=" * 50)
+    print(
+        cv_data["name"]
     )
 
     print("\n" + "=" * 50)
     print("SKILLS")
     print("=" * 50)
-    print(cv_data["skills"])
+    print(
+        cv_data["skills"]
+    )
 
     print("\n" + "=" * 50)
     print("INSTITUTIONS")
     print("=" * 50)
     print(
-        cv_data["education"][
-            "institutions"
-        ]
+        cv_data["education"]
+        ["institutions"]
     )
 
     print("\n" + "=" * 50)
     print("QUALIFICATIONS")
     print("=" * 50)
     print(
-        cv_data["education"][
-            "qualifications"
-        ]
+        cv_data["education"]
+        ["qualifications"]
     )
 
     print("\n" + "=" * 50)

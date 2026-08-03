@@ -1,78 +1,150 @@
-from backend.cv_analyzer import (
-    extract_text,
-    extract_skills
-)
+from backend.cv_analyzer import analyze_cv
+from backend.matcher_v3 import recommend_jobs
+
+
+def get_best_skills(
+    skills,
+    limit=8
+):
+    """
+    Select the most relevant skills
+    for the cover letter.
+    """
+
+    priority_skills = [
+
+        "Research",
+        "SPSS",
+        "Jamovi",
+
+        "Education",
+        "Science Education",
+
+        "Teaching",
+        "Training",
+
+        "Curriculum Development",
+        "Curriculum Studies",
+
+        "Lesson Planning",
+
+        "Microsoft Office"
+    ]
+
+    selected = []
+
+    for skill in priority_skills:
+
+        if skill in skills:
+
+            selected.append(
+                skill
+            )
+
+    for skill in skills:
+
+        if skill not in selected:
+
+            selected.append(
+                skill
+            )
+
+        if len(selected) >= limit:
+
+            break
+
+    return selected[:limit]
 
 
 def generate_cover_letter(
-    applicant_name,
-    company_name,
-    job_title,
-    cv_skills
+    cv_data,
+    job
 ):
     """
-    Generate a customized cover letter.
+    Generate personalized cover letter.
     """
 
-    skills_text = ", ".join(cv_skills)
+    qualification = cv_data[
+        "summary"
+    ][
+        "top_qualification"
+    ]
+
+    candidate_name = cv_data.get(
+        "name",
+        "CareerPilot Candidate"
+    )
+
+    skills = get_best_skills(
+        cv_data["skills"]
+    )
+
+    skills_text = ", ".join(
+        skills
+    )
 
     cover_letter = f"""
 Dear Hiring Manager,
 
-I am writing to express my interest in the {job_title} position at {company_name}.
+I am writing to express my interest in the {job['title']} position at {job['company']}.
 
-I am confident that my background, skills, and experiences make me a strong candidate for this opportunity.
+With a background in {qualification}, along with professional experience in education, research, teaching, training, and curriculum development, I am excited about the opportunity to contribute to your organization.
 
-Through my education and professional experiences, I have developed valuable skills including {skills_text}. These experiences have strengthened my analytical thinking, communication, teamwork, research, and problem-solving abilities.
+Throughout my academic and professional journey, I have developed expertise in {skills_text}. These experiences have strengthened my ability to conduct research, communicate effectively, support learning outcomes, and collaborate successfully with diverse stakeholders.
 
-I am particularly excited about the opportunity to contribute to {company_name}, learn from experienced professionals, and continue developing my expertise in this field.
+I am particularly excited about this opportunity because it aligns with my passion for continuous learning, knowledge sharing, educational development, and evidence-based research.
 
-I believe my dedication, adaptability, and willingness to learn would allow me to make a meaningful contribution to your organization.
+My academic qualifications and professional experience have equipped me with the skills necessary to make meaningful contributions while continuing to grow professionally within your organization.
 
-Thank you for your time and consideration. I appreciate the opportunity to apply for this position and would welcome the chance to discuss my qualifications further.
+Thank you for taking the time to review my application. I would welcome the opportunity to discuss how my qualifications, experience, and skills align with the needs of your organization.
 
 Sincerely,
 
-{applicant_name}
+{candidate_name}
 """
 
-    return cover_letter
+    return cover_letter.strip()
 
 
 if __name__ == "__main__":
 
-    # Read CV
-    cv_text = extract_text(
+    cv_data = analyze_cv(
         "uploads/SampleCV2.pdf"
     )
 
-    # Extract skills from CV
-    cv_skills = extract_skills(
-        cv_text
+    recommendations = recommend_jobs(
+        cv_data,
+        top_n=1
     )
 
-    # Generate cover letter
+    job = recommendations[0]
+
     cover_letter = generate_cover_letter(
-        applicant_name="John Doe",
-        company_name="Health Research Institute",
-        job_title="Research Assistant",
-        cv_skills=cv_skills
+        cv_data,
+        job
     )
 
     print("\n" + "=" * 60)
     print("GENERATED COVER LETTER")
     print("=" * 60)
 
+    print("\n")
     print(cover_letter)
 
-    # Save letter
+    output_file = (
+        "docs/generated_cover_letter.txt"
+    )
+
     with open(
-        "docs/generated_cover_letter.txt",
+        output_file,
         "w",
         encoding="utf-8"
     ) as file:
 
-        file.write(cover_letter)
+        file.write(
+            cover_letter
+        )
 
-    print("\nCover letter saved to:")
-    print("docs/generated_cover_letter.txt")
+    print(
+        f"\n\nCover letter saved to:\n{output_file}"
+    )
